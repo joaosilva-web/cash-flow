@@ -1,12 +1,14 @@
 // src/App.tsx
-import { Box } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import { Header } from "./components/Header";
+import { StatsContainer } from "./components/StatsContainer";
 
 function App() {
   return (
-    <Box w="100%">
+    <Container maxW="100%" p="0" bg="background" minH="100vh">
       <Header/>
-    </Box>
+      <StatsContainer/>
+    </Container>
   );
 }
 
