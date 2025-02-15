@@ -1,4 +1,4 @@
-import { Box, Container, Heading, HStack, Icon, Text } from "@chakra-ui/react";
+import { Box, Container, HStack, Icon, Text } from "@chakra-ui/react";
 import { ArrowCircleDown, ArrowCircleUp, CurrencyDollar } from "@phosphor-icons/react";
 
 export function StatsContainer() {
