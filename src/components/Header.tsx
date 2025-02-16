@@ -143,7 +143,7 @@ export function Header() {
         padding="2rem 0"
       >
         <Image src={logo} />
-        <Button onClick={onOpen}>New Transaction</Button>
+        <Button bg="lightBlue" color="white" h="48px" _hover={{backgroundColor: "lightBlue", transform: "scale(1.01)"}} onClick={onOpen}>New Transaction</Button>
       </Container>
       <ModalNewTransaction isModalOpen={isOpen} onModalClose={onClose} />
     </Box>
