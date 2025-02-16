@@ -5,6 +5,7 @@ import { StatsContainer } from "./components/StatsContainer";
 import { TransactionsContainer } from "./components/TransactionsContainer";
 
 function App() {
+
   return (
     <Container maxW="100%" p="0" bg="background" minH="100vh">
       <Header/>

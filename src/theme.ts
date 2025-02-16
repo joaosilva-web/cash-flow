@@ -18,6 +18,25 @@ const theme = extendTheme({
       primary: { value: "blue" },
     },
   },
+  components: {
+    Input: {
+      variants: {
+        outline: {
+          field: {
+            border: "1px solid",
+            borderColor: "gray.300",
+            backgroundColor: "#E7E9EE",
+            _focus: {
+            border: "2px solid",
+              borderColor: "#2973B2",
+              backgroundColor: "white",
+              boxShadow: 'none',
+            },
+          },
+        },
+      },
+    },
+  },
 });
 
 export default theme;
