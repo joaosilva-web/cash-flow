@@ -116,11 +116,6 @@ import useSound from "use-sound";
               </VStack>
             </FormControl>
           </ModalBody>
-          <ModalFooter>
-            <Button variant="outline" onClick={onModalClose}>
-              Cancel
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     );
