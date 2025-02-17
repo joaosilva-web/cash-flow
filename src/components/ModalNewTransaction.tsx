@@ -18,6 +18,11 @@ import {
   } from "@chakra-ui/react";
   import { ArrowCircleDown, ArrowCircleUp } from "@phosphor-icons/react";
   import { useReward } from "react-rewards";
+
+  //import songs
+  import cashInSound from "../assets/sounds/man-happy.wav";
+  import cashOutSound from "../assets/sounds/man-sad.wav";
+import useSound from "use-sound";
   
   interface IModalNewTransactionProps {
     isModalOpen: boolean;
@@ -36,6 +41,11 @@ import {
       emoji: ["💸", "😭", "📉"],
       lifetime: 100,
     });
+
+    // Songs hooks
+    
+  const [playCashIn] = useSound(cashInSound);
+  const [playCashOut] = useSound(cashOutSound);
   
     return (
       <Modal isOpen={isModalOpen} onClose={onModalClose}>
@@ -61,7 +71,7 @@ import {
                     h="64px"
                     _hover={{ borderColor: "green" }}
                     _focus={{ borderColor: "green", backgroundColor: "transparent" }}
-                    onClick={rewardInflow}
+                    onClick={() => {rewardInflow(); playCashIn()}}
                   >
                     <span id="rewardId" />
                     <Flex align="center" gap="0.5rem">
@@ -77,7 +87,7 @@ import {
                     h="64px"
                     _hover={{ borderColor: "red" }}
                     _focus={{ borderColor: "red" }}
-                    onClick={rewardOutflow}
+                    onClick={() => {rewardOutflow(); playCashOut()}}
                   >
                     <span id="rewardOutflow" />
                     <Flex align="center" gap="0.5rem">
