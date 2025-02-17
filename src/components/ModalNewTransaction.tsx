@@ -9,7 +9,6 @@ import {
     ModalBody,
     ModalCloseButton,
     ModalContent,
-    ModalFooter,
     ModalHeader,
     ModalOverlay,
     Text,
@@ -18,11 +17,12 @@ import {
   } from "@chakra-ui/react";
   import { ArrowCircleDown, ArrowCircleUp } from "@phosphor-icons/react";
   import { useReward } from "react-rewards";
+  import useSound from "use-sound";
 
   //import songs
   import cashInSound from "../assets/sounds/man-happy.wav";
   import cashOutSound from "../assets/sounds/man-sad.wav";
-import useSound from "use-sound";
+  import cashRegister from "../assets/sounds/cash-register.mp3";
   
   interface IModalNewTransactionProps {
     isModalOpen: boolean;
@@ -46,6 +46,7 @@ import useSound from "use-sound";
     
   const [playCashIn] = useSound(cashInSound);
   const [playCashOut] = useSound(cashOutSound);
+  const [playCashRegister] = useSound(cashRegister);
   
     return (
       <Modal isOpen={isModalOpen} onClose={onModalClose}>
@@ -58,7 +59,7 @@ import useSound from "use-sound";
             </Heading>
           </ModalHeader>
           <ModalBody>
-            <FormControl>
+            <FormControl as="form" onSubmit={(e) => { e.preventDefault(); playCashRegister()}}>
               <VStack spacing="1rem">
                 <Input h="64px" placeholder="Title" type="text" />
                 <Input h="64px" placeholder="Value" type="text" />
