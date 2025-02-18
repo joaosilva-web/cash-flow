@@ -44,9 +44,9 @@ import {
 
     // Songs hooks
     
-  const [playCashIn] = useSound(cashInSound);
+  const [playCashIn] = useSound(cashInSound, {volume: 0.2});
   const [playCashOut] = useSound(cashOutSound);
-  const [playCashRegister] = useSound(cashRegister);
+  const [playCashRegister] = useSound(cashRegister, {volume: 0.2});
   
     return (
       <Modal isOpen={isModalOpen} onClose={onModalClose}>
