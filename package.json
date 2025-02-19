@@ -12,6 +12,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.10.4",
     "@phosphor-icons/react": "^2.1.7",
+    "motion": "^12.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-rewards": "^2.1.0",
