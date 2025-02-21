@@ -145,7 +145,7 @@ export function ModalNewTransaction({
               <Input type="text" h="64px" placeholder="Category" />
               <Button
                 isLoading={isSubmittingForm}
-                bg="green"
+                bg="blue"
                 color="white"
                 height="64px"
                 marginTop="1.25rem"
@@ -153,10 +153,10 @@ export function ModalNewTransaction({
                 type="submit"
                 w="100%"
                 _hover={{
-                  backgroundColor: "green.900",
+                  backgroundColor: "blue.900",
                   transform: "scale(1.01)",
                 }}
-                _focus={{ backgroundColor: "green" }}
+                _focus={{ backgroundColor: "blue" }}
               >
                 {!submitCompleted ? (
                   "Register"
