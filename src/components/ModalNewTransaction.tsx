@@ -52,7 +52,7 @@ export function ModalNewTransaction({
 
 
   // Custom hooks
-  const { transactions, setTransactions } = useTransactions();
+  const { addTransaction } = useTransactions();
 
   // Rewards hooks
   const { reward: rewardInflow } = useReward("rewardId", "emoji", {
@@ -93,7 +93,12 @@ export function ModalNewTransaction({
   ) {
     e.preventDefault();
     setIsSubmittingForm(true);
-    setTransactions([...transactions, {...formData, id: "0", date: new Date(), type: formData.type as "inflow" | "outflow", }])
+    addTransaction({
+      title: formData.title,
+      value: formData.value,
+      category: formData.category,
+      type: formData.type as "inflow" | "outflow",
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 500));
     playCashRegister();
