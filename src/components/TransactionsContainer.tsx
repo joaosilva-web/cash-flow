@@ -1,4 +1,5 @@
 import {
+  Button,
   Container,
   Table,
   TableContainer,
@@ -10,8 +11,10 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "motion/react";
 import { useTransactions } from "../hooks/useTransactions";
+import { Trash } from "@phosphor-icons/react";
 
 interface IReusableTrProps {
+  id: string;
   title: string;
   value: string;
   category: string;
@@ -22,7 +25,15 @@ interface IReusableTrProps {
 const MotionContainer = motion(Container);
 
 //component to reutilize the stylized Tr
-function ReusableTr({ category, date, title, type, value }: IReusableTrProps) {
+function ReusableTr({
+  id,
+  category,
+  date,
+  title,
+  type,
+  value,
+}: IReusableTrProps) {
+  const { deleteTransaction } = useTransactions();
   return (
     <Tr h="4rem" borderRadius="8px">
       <Td
@@ -43,10 +54,18 @@ function ReusableTr({ category, date, title, type, value }: IReusableTrProps) {
       <Td
         bg="white"
         color="text"
+      >
+        {date.toLocaleString()}
+      </Td>
+      <Td
+        bg="white"
+        color="text"
         borderTopRightRadius="8px"
         borderBottomRightRadius="8px"
       >
-        {date.toLocaleString()}
+        <Button bg="transparent" _hover={{color: "red"}} onClick={() => deleteTransaction(id)}>
+          <Trash />
+        </Button>
       </Td>
     </Tr>
   );
@@ -85,6 +104,9 @@ export function TransactionsContainer() {
               </Th>
               <Th color="text" fontWeight="normal">
                 Date
+              </Th>
+              <Th color="text" fontWeight="normal">
+                Delete
               </Th>
             </Tr>
           </Thead>

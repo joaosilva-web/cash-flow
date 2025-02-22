@@ -15,6 +15,7 @@ export interface IUserTransactions {
     transactions: IUserTransactions[];
     setTransactions: React.Dispatch<React.SetStateAction<IUserTransactions[]>>;
     addTransaction: (transaction: Omit<IUserTransactions,"id" | "date">) => void;
+    deleteTransaction: (id: string) => void;
   }
 
   const TransactionsContext = createContext<TransactionsContextType | undefined>(undefined);
@@ -33,15 +34,22 @@ export interface IUserTransactions {
     function addTransaction(transaction: Omit<IUserTransactions, "id" | "date">) {
       const newTransaction = {
         ...transaction,
-        id: `${crypto.randomUUID}`,
+        id: `${crypto.randomUUID()}`,
         date: new Date()
       }
 
       setTransactions((prev) => [...prev, newTransaction])
     }
 
+    function deleteTransaction(id: string) {
+      console.log(id)
+      const newTransactionsArr = transactions.filter((prev) => prev.id !== id);
+      setTransactions(newTransactionsArr);
+      Cookies.set("transactions", JSON.stringify(newTransactionsArr), {expires: 365});
+    }
+
     return (
-      <TransactionsContext.Provider value={{ transactions, setTransactions, addTransaction }}>
+      <TransactionsContext.Provider value={{ transactions, setTransactions, addTransaction, deleteTransaction }}>
         {children}
       </TransactionsContext.Provider>
     );
