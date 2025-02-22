@@ -9,6 +9,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { motion } from "motion/react";
+import { useTransactions } from "../hooks/useTransactions";
 
 interface IReusableTrProps {
   title: string;
@@ -52,6 +53,9 @@ function ReusableTr({ category, date, title, type, value }: IReusableTrProps) {
 }
 
 export function TransactionsContainer() {
+  //Custom hooks
+  const { transactions } = useTransactions();
+
   return (
     <MotionContainer
       maxW="1120px"
@@ -85,17 +89,15 @@ export function TransactionsContainer() {
             </Tr>
           </Thead>
           <Tbody>
-            <ReusableTr
-              type="inflow"
-              title="Desenvolvimento de site"
-              value="R$ 12.000,00"
-              category="Venda"
-              date={new Date()}
-            />
-            {/* invisible line to spacing */}
-            <Tr>
-              <Td colSpan={4} h="0.5rem" padding="0" bg="transparent" />
-            </Tr>
+            {transactions.map((transaction) => (
+              <>
+                <ReusableTr key={transaction.id} {...transaction} />
+                {/* invisible line to spacing */}
+                <Tr>
+                  <Td colSpan={4} h="0.5rem" padding="0" bg="transparent" />
+                </Tr>
+              </>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>

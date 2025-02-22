@@ -26,6 +26,8 @@ import cashRegister from "../assets/sounds/cash-register.mp3";
 import { useState } from "react";
 import { motion } from "motion/react";
 
+import {useTransactions} from "../hooks/useTransactions"
+
 interface IModalNewTransactionProps {
   isModalOpen: boolean;
   onModalClose: () => void;
@@ -38,6 +40,19 @@ export function ModalNewTransaction({
   // React hooks
   const [isSubmittingForm, setIsSubmittingForm] = useState(false);
   const [submitCompleted, setSubmitCompleted] = useState(false);
+  const [formData, setFormData] = useState<{title: string;
+    value: string;
+    category: string;
+    type: "inflow" | "outflow" | "";}>({
+    title: "",
+    value: "",
+    category: "",
+    type: "", // "inflow" ou "outflow"
+  });
+
+
+  // Custom hooks
+  const { transactions, setTransactions } = useTransactions();
 
   // Rewards hooks
   const { reward: rewardInflow } = useReward("rewardId", "emoji", {
@@ -50,7 +65,6 @@ export function ModalNewTransaction({
   });
 
   // Songs hooks
-
   const [playCashIn] = useSound(cashInSound, { volume: 0.2 });
   const [playCashOut] = useSound(cashOutSound);
   const [playCashRegister] = useSound(cashRegister, { volume: 0.2 });
@@ -67,11 +81,19 @@ export function ModalNewTransaction({
     },
   };
 
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
   async function handleSubmitNewTransactionForm(
     e: React.FormEvent<HTMLDivElement>
   ) {
     e.preventDefault();
     setIsSubmittingForm(true);
+    setTransactions([...transactions, {...formData, id: "0", date: new Date(), type: formData.type as "inflow" | "outflow", }])
 
     await new Promise((resolve) => setTimeout(resolve, 500));
     playCashRegister();
@@ -82,6 +104,13 @@ export function ModalNewTransaction({
     setSubmitCompleted(false);
     setIsSubmittingForm(false);
     onModalClose();
+
+    setFormData({
+      title: "",
+      value: "",
+      category: "",
+      type: "",
+    });
   }
 
   return (
@@ -97,13 +126,13 @@ export function ModalNewTransaction({
         <ModalBody>
           <FormControl as="form" onSubmit={handleSubmitNewTransactionForm}>
             <VStack spacing="1rem">
-              <Input h="64px" placeholder="Title" type="text" />
-              <Input h="64px" placeholder="Value" type="text" />
+              <Input name="title" h="64px" placeholder="Title" type="text" value={formData.title} onChange={handleInputChange}/>
+              <Input name="value" h="64px" placeholder="Value" type="text" value={formData.value} onChange={handleInputChange}/>
               <ButtonGroup w="100%">
                 <Button
                   bg="white"
                   border="2px solid"
-                  borderColor="gray.300"
+                  borderColor={formData.type === "inflow"? 'green' : 'gray.300'}
                   flex="1"
                   h="64px"
                   _hover={{ borderColor: "green" }}
@@ -112,6 +141,7 @@ export function ModalNewTransaction({
                     backgroundColor: "transparent",
                   }}
                   onClick={() => {
+                    setFormData({...formData, type: "inflow"})
                     rewardInflow();
                     playCashIn();
                   }}
@@ -125,12 +155,13 @@ export function ModalNewTransaction({
                 <Button
                   border="2px solid"
                   bg="white"
-                  borderColor="gray.300"
+                  borderColor={formData.type === 'outflow'? 'red' : 'gray.300'}
                   flex="1"
                   h="64px"
                   _hover={{ borderColor: "red" }}
                   _focus={{ borderColor: "red" }}
                   onClick={() => {
+                    setFormData({...formData, type: "outflow"})
                     rewardOutflow();
                     playCashOut();
                   }}
@@ -142,7 +173,7 @@ export function ModalNewTransaction({
                   </Flex>
                 </Button>
               </ButtonGroup>
-              <Input type="text" h="64px" placeholder="Category" />
+              <Input name="category" type="text" h="64px" placeholder="Category" value={formData.category} onChange={handleInputChange}/>
               <Button
                 isLoading={isSubmittingForm}
                 bg="blue"

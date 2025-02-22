@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from "react";
 export interface IUserTransactions {
     id: string;
     title: string;
-    value: number;
+    value: string;
     category: string;
     date: Date;
     type: "inflow" | "outflow";
