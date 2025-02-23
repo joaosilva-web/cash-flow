@@ -38,13 +38,25 @@ function ReusableTr({ id, category, date, title, type, value }: IReusableTrProps
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
 
+  const formattedTitle = title.trim().replace(/\s+/g, ' ');
+
+  // Formatando value para exibir como R$ 00,00
+  const formattedValue = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(Number(value));
+
+  // Formatando date para o formato dd/mm/aaaa
+  const newDate = new Date(date);
+  const formattedDate = newDate.toLocaleDateString('pt-BR');
+
   return (
     <>
       <Tr h="4rem" borderRadius="8px">
-        <Td bg="white" color="title" fontWeight="medium" borderTopLeftRadius="8px" borderBottomLeftRadius="8px">{title}</Td>
-        <Td bg="white" color={type === "inflow" ? "green" : "red"}>{value}</Td>
+        <Td bg="white" color="title" fontWeight="medium" borderTopLeftRadius="8px" borderBottomLeftRadius="8px">{formattedTitle}</Td>
+        <Td bg="white" color={type === "inflow" ? "green" : "red"}>{formattedValue}</Td>
         <Td bg="white" color="text">{category}</Td>
-        <Td bg="white" color="text">{date.toLocaleString()}</Td>
+        <Td bg="white" color="text">{formattedDate}</Td>
         <Td bg="white" color="text" borderTopRightRadius="8px" borderBottomRightRadius="8px">
           <Button bg="transparent" _hover={{ color: "red" }} onClick={onOpen}>
             <Trash />
