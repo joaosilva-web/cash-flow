@@ -8,7 +8,7 @@ import { TransactionsProvider } from "./hooks/useTransactions";
 function App() {
   return (
     <TransactionsProvider>
-      <Container maxW="100%" p="0" bg="background" minH="100vh">
+      <Container maxW="100vw" p="0" bg="background" minH="100vh">
         <Header />
         <StatsContainer />
         <TransactionsContainer />
